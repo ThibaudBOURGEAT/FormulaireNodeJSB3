@@ -1,21 +1,28 @@
 var express = require('express');
 var fs = require('fs');
 var bodyParser = require('body-parser');
-var urlencoderParser = bodyParser.urlencoded({ extended: false});
+var path = require('path');
+var urlParser = bodyParser.urlencoded({extended: true})
 
 const port = 8000;
 const app = express();
 
-app.get('/register', (req, res) => {
+app.use(express.static(path.join(__dirname + 'app/dist')));
+
+app.get('/', (req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end(fs.readFileSync(__dirname + '/app/src/templates/index.html'));
 });
 
-app.post('/register', urlencoderParser,(req, res) => {
-  console.log("ok");
+app.get('/register', (req, res) => {
   res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/json; charset=utf-8');
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.end(fs.readFileSync(__dirname + '/app/src/templates/register.html'));
+});
+
+app.post('/register', urlParser, (req, res) => {
+  res.writeHead(200, {'Content-Type': 'application/json'});
   res.end(JSON.stringify(req.body));
 });
 
