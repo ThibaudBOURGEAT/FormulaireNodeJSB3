@@ -2,3 +2,4 @@
 {"lastname":"xxxxxxxxx","firstname":"xxxxxxx","address":"xxxxxx","pseudo":"xxxxx","email":"xxxxxx"}
 {"lastname":"Plessy ","firstname":"pierre","address":"fabia","pseudo":"Fenderoc","email":"pieerre"}
 {"lastname":"dsqdqd","firstname":"dazd","address":"qsdsqdq","pseudo":"dqsq","email":"sqdsq"}
+{"lastname":"Plessy ","firstname":"pierre","address":"fabia","pseudo":"Fenderoc","email":"pieerre"}
