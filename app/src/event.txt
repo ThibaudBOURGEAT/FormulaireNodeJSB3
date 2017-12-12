@@ -1,0 +1,3 @@
+{"lastname":"oooooooo","firstname":"ooooooo","address":"oooooooo","pseudo":"oooooooo","email":"ooooooo"}
+{"lastname":"xxxxxxxxx","firstname":"xxxxxxx","address":"xxxxxx","pseudo":"xxxxx","email":"xxxxxx"}
+{"lastname":"Plessy ","firstname":"pierre","address":"fabia","pseudo":"Fenderoc","email":"pieerre"}
