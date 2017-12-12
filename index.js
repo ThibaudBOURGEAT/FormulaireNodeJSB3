@@ -22,16 +22,9 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', urlencoderParser,(req, res) => {
-  console.log("ok");
-
   fs.appendFile(__dirname + '/app/src/event.txt', JSON.stringify(req.body) + "\r\n" , "UTF-8");
-
-  contenu = fs.readFileSync(__dirname + '/app/src/event.txt', "UTF-8");
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  console.log(contenu);
-
-  // res.end(JSON.stringify(contenu));
 
   res.end(fs.readFileSync(__dirname + '/app/src/templates/index.html'));
 
