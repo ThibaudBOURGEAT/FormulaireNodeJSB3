@@ -27,16 +27,29 @@ const user_schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    billing_address : {
+    group: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Type_address',
+        ref: 'Group',
+    }
+    address : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address',
         required: true,
     },
-    delivery_address : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Type_address',
-        required: true,
-    }
+});
+
+user_schema.pre('save', function(next) {
+    var user = this;
+    if (!user.isModified('password')) return next();
+
+    bcrypt.genSalt(config.salt_iter, (err, salt) => {
+        if (err) return next(err);
+        bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
 });
 
 
