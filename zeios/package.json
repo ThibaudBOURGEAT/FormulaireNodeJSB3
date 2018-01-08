@@ -1,0 +1,14 @@
+{
+  "name": "zelos",
+  "version": "1.0.0",
+  "description": "exercice node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Plessy Pierre && Thibaud Bourgeat",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^4.13.9"
+  }
+}
