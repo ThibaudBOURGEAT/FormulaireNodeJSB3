@@ -27,6 +27,16 @@ const user_schema = new mongoose.Schema({
         type: String,
         required: true
     },
+    billing_address : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Type_address',
+        required: true,
+    },
+    delivery_address : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Type_address',
+        required: true,
+    }
 });
 
 
