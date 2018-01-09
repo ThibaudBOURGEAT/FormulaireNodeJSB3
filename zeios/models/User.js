@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
-// User
 const user_schema = new mongoose.Schema({
     firstname: {
         type: String,
@@ -30,26 +29,17 @@ const user_schema = new mongoose.Schema({
     group: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Group',
-    }
-    address : {
+    },
+    address: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address',
     },
 });
 
-user_schema.pre('save', function(next) {
-    var user = this;
-    if (!user.isModified('password')) return next();
+module.exports.hashPassword = function(password) {
+    var hash = crypto.createHash('sha256');
 
-    bcrypt.genSalt(config.salt_iter, (err, salt) => {
-        if (err) return next(err);
-        bcrypt.hash(user.password, salt, (err, hash) => {
-            if (err) return next(err);
-            user.password = hash;
-            next();
-        });
-    });
-});
-
+    return hash.update(password).digest('base64');
+}
 
 module.exports = mongoose.model('User', user_schema);

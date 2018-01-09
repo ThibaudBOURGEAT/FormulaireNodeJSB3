@@ -1,11 +1,13 @@
 var express = require('express');
-var User = require('../User');
+var User = require('./models/User');
+var path = require('path');
+require("./config.js");
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'app/dist')));
 
-app.listen(port, function() {
+app.listen(process.env.PORT, function() {
   console.log('Le serveur répond sur le port: '+ process.env.PORT);
 });
 
@@ -18,12 +20,14 @@ app.get('/register', function(req,res){
 
 
 app.post('/register', function(req,res){
+var password = req.body.password;
+
   var newUser = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     birthdate: req.body.birthdate,
     login: req.body.login,
-    password: req.body.password,
+    password: hash.hashPassword(password),
   });
 
   newUser.save(function(err){
