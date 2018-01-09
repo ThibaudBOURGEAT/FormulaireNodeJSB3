@@ -38,3 +38,13 @@ app.post('/user/register', function(req,res){
         res.json({success: true, message: 'Account created !'});
     });
 });
+
+app.delete('/user/delete', function(req,res){
+    User.remove({login: req.body.login}, function(err){
+        if (err){
+            res.json("Error");
+        }else{
+            res.json({success: true, message: 'Account delete !'})
+        }
+    });
+});
