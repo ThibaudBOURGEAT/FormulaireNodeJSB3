@@ -7,7 +7,7 @@ const user_schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    firstname: {
+    lastname: {
         type: String,
         required: true,
     },
@@ -34,7 +34,6 @@ const user_schema = new mongoose.Schema({
     address : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address',
-        required: true,
     },
 });
 
