@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
 
 const user_schema = new mongoose.Schema({
     firstname: {
@@ -35,11 +34,5 @@ const user_schema = new mongoose.Schema({
         ref: 'Address',
     },
 });
-
-module.exports.hashPassword = function(password) {
-    var hash = crypto.createHash('sha256');
-
-    return hash.update(password).digest('base64');
-}
 
 module.exports = mongoose.model('User', user_schema);
