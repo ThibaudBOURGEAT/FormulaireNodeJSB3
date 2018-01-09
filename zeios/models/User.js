@@ -18,7 +18,7 @@ const user_schema = new mongoose.Schema({
         required: true,
         match: [/^[a-zA-Z0-9]{3,12}$/, 'only between 3 and 12 digits or letters !!!!!'],
         index: {
-            unique: true,
+            unique: true
         }
     },
     password: {

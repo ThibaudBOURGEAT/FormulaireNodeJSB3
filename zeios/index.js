@@ -1,9 +1,12 @@
 var express = require('express');
-var User = require('./models/User');
 var bodyParser = require('body-parser');
 var hash = require('./helpers/hash');
 var path = require('path');
 require("./config.js");
+
+var User = require('./models/User');
+var Group = require('./models/Group');
+var Address = require('./models/Address');
 
 const app = express();
 
@@ -36,6 +39,27 @@ app.post('/user/register', function(req,res){
 
     newUser.save(function(err){
         res.json({success: true, message: 'Account created !'});
+    });
+});
+
+app.post('/user/update', function(req,res){
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var password = hash.hashPassword(req.body.password);
+
+    if(!firstname){ firstname = req.user.firstname;}
+    if(!lastname){ lastname = req.user.lastname;}
+    if(!password){ password = hash.hashPassword(req.user.password)}
+
+    User.find({login: req.body.login}).update({
+        $set: {
+            firstname: firstname,
+            lastname: lastname,
+            password: password
+        }
+    }, function(err){
+        if(err){res.json({success: false, message: 'Error'});}
+        else{res.json({success: true, message: 'Account update !'});}
     });
 });
 
