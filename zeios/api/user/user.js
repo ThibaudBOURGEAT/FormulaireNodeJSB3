@@ -1,9 +1,9 @@
 const router = require('express').Router();
-var hash = require('../../helpers/hash');
-var User = require('../../models/User');
-var Group = require('../../models/Group');
-var Address = require('../../models/Address');
-
+const hash = require('../../helpers/hash');
+const User = require('../../models/User');
+const Group = require('../../models/Group');
+const Address = require('../../models/Address');
+const passport = require('passport');
 
 router.get('/all', function(req,res){
     User.find({}).limit(10).then(function(users){
@@ -11,7 +11,7 @@ router.get('/all', function(req,res){
     });
 });
 
-router.get('/', function(req,res){
+router.get('/', passport.authenticate('jwt', {session: false}), function(req,res){
     res.json(req.user);
 });
 
