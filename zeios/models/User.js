@@ -33,6 +33,10 @@ const user_schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address',
     },
+    deleted: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 module.exports = mongoose.model('User', user_schema);
