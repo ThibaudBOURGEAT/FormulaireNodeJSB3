@@ -29,6 +29,7 @@ app.get('/user', function(req,res){
 });
 
 app.post('/user/register', function(req,res){
+
     const newUser = new User({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -37,8 +38,32 @@ app.post('/user/register', function(req,res){
         password: hash.hashPassword(req.body.password)
     });
 
-    newUser.save(function(err){
-        res.json({success: true, message: 'Account created !'});
+    newUser.validate().then(function(){
+        Group.findOne({wording: req.body.group}).then(function(group){
+            if(!group && req.body.group){
+                const newGroup = new Group({
+                    wording: req.body.group,
+                    description: ""
+                });
+                console.log("test1");
+                newGroup.save();
+                newUser.group = newGroup._id;
+                console.log("test2");
+                return;
+            }
+            console.log("test4");
+            newUser.group = group._id;
+            console.log("test5");
+        });
+    }).then(function(){
+        newUser.save()
+            .then(() => {
+                res.json({success: true, message: 'Account created !'});
+            })
+            .catch((err) => {
+                res.json("Error");
+                console.log(err);
+            });
     });
 });
 
@@ -71,4 +96,36 @@ app.delete('/user/delete', function(req,res){
             res.json({success: true, message: 'Account delete !'})
         }
     });
+});
+
+app.post('/group/register', function(req,res){
+    const newGroup = new Group({
+        wording: req.body.wording,
+        description: req.body.description
+    });
+
+    newGroup.save(function(err){
+        res.json({success: true, message: 'Group created !'});
+    });
+});
+
+app.delete('/user/softdelete', function(req, res) {
+    User.find({
+            login: req.body.login
+        })
+        .update({
+            deleted: true
+        }, function(err) {
+            if (err) {
+                res.json({
+                    success: false,
+                    message: 'Error'
+                });
+            } else {
+                res.json({
+                    success: true,
+                    message: 'Account softdelete !'
+                });
+            }
+        })
 });

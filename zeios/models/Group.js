@@ -12,7 +12,7 @@ const group_schema = new mongoose.Schema({
     },
     description: {
         type: String
-    },
+    }
 })
 
 
