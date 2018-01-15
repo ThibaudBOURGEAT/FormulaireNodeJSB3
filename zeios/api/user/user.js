@@ -25,6 +25,8 @@ router.post('/register', function(req,res){
         password: hash.hashPassword(req.body.password)
     });
 
+    var group;
+
     newUser.validate().then(function(){
         Group.findOne({wording: req.body.group}).then(function(groupFind){
             if(!groupFind && req.body.group){
@@ -33,19 +35,22 @@ router.post('/register', function(req,res){
                     description: ""
                 });
                 newGroup.save();
+                group = newGroup;
                 newUser.group.push(newGroup);
                 newUser.save().then(function(){
                     res.json({success: true, message: 'Account created !'});
                 }).catch(function(err){
                     if(err){res.json(err)};
                 });
-            }
+            }else{
+            group = groupFind;
             newUser.group.push(groupFind);
             newUser.save().then(function(){
                 res.json({success: true, message: 'Account created !'});
             }).catch(function(err){
                 if(err){res.json(err)};
             });
+            }
         });
     })
 });
