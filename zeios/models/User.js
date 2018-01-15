@@ -25,14 +25,16 @@ const user_schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    group: {
+    group: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Group',
-    },
-    address: {
+        default: []
+    }],
+    address: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address',
-    },
+        default: []
+    }],,
     deleted: {
         type: Boolean,
         default: false,
