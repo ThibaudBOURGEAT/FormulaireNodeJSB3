@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 router.get('/all', function(req,res){
-    Group.find({}).limit(10).then(function(groups){
+    Group.find({deleted: false}).limit(10).then(function(groups){
         res.json(groups);
     });
 });

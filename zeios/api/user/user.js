@@ -50,7 +50,7 @@ router.post('/register', function(req,res){
     })
 });
 
-router.post('/update', function(req,res){
+router.post('/update', passport.authenticate('jwt', {session: false}), function(req,res){
     var firstname = req.body.firstname;
     var lastname = req.body.lastname;
     var password = hash.hashPassword(req.body.password);
@@ -71,7 +71,7 @@ router.post('/update', function(req,res){
     });
 });
 
-router.delete('/delete', function(req,res){
+router.delete('/delete', passport.authenticate('jwt', {session: false}), function(req,res){
     User.remove({login: req.body.login}, function(err){
         if (err){
             res.json("Error");
@@ -81,7 +81,7 @@ router.delete('/delete', function(req,res){
     });
 });
 
-router.delete('/softdelete', function(req, res) {
+router.delete('/softdelete', passport.authenticate('jwt', {session: false}), function(req, res) {
     User.find({
             login: req.body.login
         })
