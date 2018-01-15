@@ -22,30 +22,39 @@ router.post('/register', function(req,res){
         lastname: req.body.lastname,
         birthdate: req.body.birthdate,
         login: req.body.login,
-        password: hash.hashPassword(req.body.password)
+        password: hash.hashPassword(req.body.password),
     });
 
+    var group;
+    console.log("1");
     newUser.validate().then(function(){
-        Group.findOne({wording: req.body.group}).then(function(group){
-            if(!group && req.body.group){
+        console.log("1.5");
+        Group.findOne({wording: req.body.group}).then(function(groupFind){
+            console.log("2");
+            if(!groupFind && req.body.group){
                 const newGroup = new Group({
                     wording: req.body.group,
                     description: ""
                 });
                 newGroup.save();
-                newUser.group = newGroup._id;
+                console.log("3");
+                group = newGroup;
+                newUser.group.push(newGroup);
                 return;
             }
-            newUser.group = group._id;
+            console.log("3");
+            group = groupFind;
+            newUser.group.push(groupFind);
         });
-    }).then(function(){
-        newUser.save()
+    }).then(function(){ newUser.save(); })
+      .then(function(){
+          console.log("4");
+          group.users.push(newUser).save()
             .then(() => {
                 res.json({success: true, message: 'Account created !'});
             })
             .catch((err) => {
-                res.json("Error");
-                console.log(err);
+                res.json(err);
             });
     });
 });

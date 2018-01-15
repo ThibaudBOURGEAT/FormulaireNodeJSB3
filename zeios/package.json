@@ -15,6 +15,7 @@
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.13.9",
+    "mongoose-relationship": "^0.1.5",
     "nodemon": "^1.14.9",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1"
