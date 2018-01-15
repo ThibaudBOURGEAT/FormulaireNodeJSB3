@@ -34,7 +34,7 @@ const user_schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address',
         default: []
-    }],,
+    }],
     deleted: {
         type: Boolean,
         default: false,

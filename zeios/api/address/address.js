@@ -1,33 +1,44 @@
 const router = require('express').Router();
 
 router.get('/all', function(req, res) {
-    Group.find({}).limit(10).then(function(groups) {
-        res.json(groups);
+    Address.find({}).limit(10).then(function(address) {
+        res.json(address);
     });
 });
 
 router.post('/register', function(req, res) {
-    const newGroup = new Group({
-        wording: req.body.wording,
-        description: req.body.description
+    const newAddress = new Address({
+        streetname: req.body.streetname,
+        numstreet: req.body.numstreet,
+        city: req.body.city,
+        codepostal: req.body.codepostal
     });
 
-    newGroup.save(function(err) {
+    newAddress.save(function(err) {
         res.json({
             success: true,
-            message: 'Group created !'
+            message: 'Address created !'
         });
     });
 });
 
 router.post('/update', function(req, res) {
-    var description = req.body.description;
+    const streetname = req.body.streetname
+    const numstreet = req.body.numstreet
+    const city = req.body.city
+    const codepostal = req.body.codepostal
 
-    Group.find({
-        login: req.body.wording
+    Address.find({
+        streetname: streetname,
+        numstreet: numstreet,
+        city: city,
+        codepostal: codepostal
     }).update({
         $set: {
-            description: description
+            streetname: streetname,
+            numstreet: numstreet,
+            city: city,
+            codepostal: codepostal
         }
     }, function(err) {
         if (err) {
@@ -38,15 +49,18 @@ router.post('/update', function(req, res) {
         } else {
             res.json({
                 success: true,
-                message: 'Group update !'
+                message: 'Address update !'
             });
         }
     });
 });
 
 router.delete('/delete', function(req, res) {
-    Group.remove({
-        wording: req.body.wording
+    Address.remove({
+        streetname: req.body.streetname,
+        numstreet: req.body.numstreet,
+        city: req.body.city,
+        codepostal: req.body.codepostal
     }, function(err) {
         if (err) {
             res.json("Error");
@@ -60,8 +74,11 @@ router.delete('/delete', function(req, res) {
 });
 
 router.delete('/softdelete', function(req, res) {
-    Group.find({
-            wording: req.body.wording
+    Address.find({
+            streetname: req.body.streetname,
+            numstreet: req.body.numstreet,
+            city: req.body.city,
+            codepostal: req.body.codepostal
         })
         .update({
             deleted: true
