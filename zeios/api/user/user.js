@@ -6,7 +6,7 @@ const Address = require('../../models/Address');
 const passport = require('passport');
 
 router.get('/all', function(req,res){
-    User.find({}).limit(10).then(function(users){
+    User.find({deleted: false}).limit(10).then(function(users){
         res.json(users);
     });
 });
@@ -26,7 +26,7 @@ router.post('/register', function(req,res){
     });
 
     newUser.validate().then(function(){
-        Group.findOne({wording: req.body.group}).then(function(groupFind){
+        Group.findOne({wording: req.body.group, deleted: false}).then(function(groupFind){
             if(!groupFind && req.body.group){
                 const newGroup = new Group({
                     wording: req.body.group,
@@ -59,7 +59,7 @@ router.post('/update', function(req,res){
     if(!lastname){ lastname = req.user.lastname;}
     if(!password){ password = hash.hashPassword(req.user.password)}
 
-    User.find({login: req.user.login}).update({
+    User.find({login: req.user.login, deleted: false}).update({
         $set: {
             firstname: firstname,
             lastname: lastname,
